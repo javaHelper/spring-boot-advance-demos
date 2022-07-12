@@ -3,7 +3,7 @@
 - Make a POST request to `/users/signin` with the default admin user we programatically created to get a valid JWT token
 
 ```sh
-$ curl -X POST 'http://localhost:8080/users/signin?username=admin&password=admin'
+curl -X POST 'http://localhost:8080/users/signin?username=admin&password=admin'
 ```
 Response:
 
@@ -31,3 +31,17 @@ Response:
     ]
 }
 ```
+
+- Refresh Endpoint - 
+
+```
+curl --location --request GET 'http://localhost:8080/users/refresh' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTY1NzY0MzAyNiwiZXhwIjoxNjU3NjQ2NjI2fQ.95rFZ9tsyNLN3ZFCVoN12-xjAv0sUf3OfJZpRscQlro'
+```
+
+Response:
+
+```sh
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTY1NzY0Mzc3NywiZXhwIjoxNjU3NjQ3Mzc3fQ.2BxxT-UKcWWP4BZv08OxEHmi6RD3SAajQYzQNfwvqgc
+```
+
