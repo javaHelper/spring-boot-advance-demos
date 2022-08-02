@@ -17,6 +17,7 @@ http://localhost:8080/productById/1
 
 ```
 
+- application.yml
 
 ```sh
 spring:
