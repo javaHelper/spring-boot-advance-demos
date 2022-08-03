@@ -62,3 +62,5 @@ curl --location --request PUT 'http://localhost:8080/update' \
     "price": 194000.0
 }'
 ```
+
+DELETE - You can create delete one I've not shows here!
