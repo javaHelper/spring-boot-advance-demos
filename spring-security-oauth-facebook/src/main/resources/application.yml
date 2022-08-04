@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: spring-oauth2-security-example
+
+security:
+  oauth2:
+    client:
+      client-id: 767861304337307
+      client-secret: bf4e4ba48e79af86cae109388143dc19
+      access-token-uri: https://graph.facebook.com/oauth/access_token
+      user-authorization-uri: https://www.facebook.com/dialog/oauth
+      token-name: oauth_token
+      authentication-scheme: query
+      client-authentication-scheme: form
+    resource:
+      user-info-uri: https://graph.facebook.com/me?fields=id,last_name,email,first_name,gender,education,birthday,hometown,location,name,middle_name
