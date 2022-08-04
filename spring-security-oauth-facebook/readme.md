@@ -1,5 +1,7 @@
 # Spring Boot Security OAuth2 example:
 
+- Laucnh App using `http://localhost:8080` - enter facebook username and password and done.
+
 Use this graph explorer tool to see what fields you need in your response.
 
 `https://developers.facebook.com/tools/explorer/`
