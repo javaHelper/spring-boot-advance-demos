@@ -1,6 +1,6 @@
 # Spring Cloud Stream Processor Demo
 
-<img width="1244" alt="Screenshot 2022-08-29 at 7 44 44 PM" src="https://user-images.githubusercontent.com/54174687/187224399-d5a676d7-3a39-4807-b4bf-7d041df9965f.png">
+<img width="731" alt="Screenshot 2022-08-29 at 7 45 22 PM" src="https://user-images.githubusercontent.com/54174687/187224428-4d369fc3-d458-4e77-96bc-b0f4665f479f.png">
 
 ```java
 package com.example.demo;
@@ -46,4 +46,4 @@ public class SpringCloudStreamProcessDemoApplication {
 }
 ```
 
-<img width="731" alt="Screenshot 2022-08-29 at 7 45 22 PM" src="https://user-images.githubusercontent.com/54174687/187224428-4d369fc3-d458-4e77-96bc-b0f4665f479f.png">
+<img width="1244" alt="Screenshot 2022-08-29 at 7 44 44 PM" src="https://user-images.githubusercontent.com/54174687/187224399-d5a676d7-3a39-4807-b4bf-7d041df9965f.png">
