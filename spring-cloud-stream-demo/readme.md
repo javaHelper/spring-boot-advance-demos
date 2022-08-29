@@ -31,6 +31,11 @@ public class SpringCloudStreamProcessDemoApplication {
 <img width="1340" alt="Screenshot 2022-08-29 at 6 59 06 PM" src="https://user-images.githubusercontent.com/54174687/187214157-474fea96-0004-45dd-b4aa-9f5ffdde2fb2.png">
 
 ```sh
+kafka-topics --list --bootstrap-server localhost:9092
+uppercase-in-0
+uppercase-out-0
+
+
 kafka-console-producer --bootstrap-server localhost:9092 --topic toUppercase-in-0
 >hello spring
 >hello
