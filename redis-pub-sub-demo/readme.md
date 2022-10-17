@@ -96,3 +96,7 @@ Once everything is ready, I run these commands one by one.
  
 # Run the applications
 ```docker-compose up```
+
+# Summary:
+We were able to successfully demonstrate Redis PubSub with Spring Boot by developing 2 simple Microservices. As we had seen above the publisher & the subscriber are not tightly coupled, but they still were able to communicate via Redis PubSub feature.
+
