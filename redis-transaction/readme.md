@@ -22,6 +22,103 @@ Spring Data Redis provides the SessionCallBack interface which needs to be imple
 - MoneyTransfer is an implementation of SessionCallBack which contains the business logic for money transfer.
 - It will receive account Ids and the amount to be transferred.
 
+- Account
+
+```java
+@Data
+@AllArgsConstructor(staticName = "of")
+public class Account implements Serializable {
+    private int userId;
+    private int balance;
+}
+```
+
+- MoneyTransfer.java
+
+```java
+package com.example.demo;
+
+import lombok.AllArgsConstructor;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SessionCallback;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+
+@AllArgsConstructor(staticName = "of")
+public class MoneyTransfer implements SessionCallback<List<Object>> {
+    public static final String ACCOUNT = "account";
+    private final int fromAccountId;
+    private final int toAccountId;
+    private final int amount;
+
+    @Override
+    public <K, V> List<Object> execute(RedisOperations<K, V> redisOperations) throws DataAccessException {
+        RedisTemplate<Object, Object> operations = (RedisTemplate<Object, Object>) redisOperations;
+        HashOperations<Object, Object, Object> hashOperations = operations.opsForHash();
+        var fromAccount = (Account) hashOperations.get(ACCOUNT, fromAccountId);
+        var toAccount = (Account) hashOperations.get(ACCOUNT, toAccountId);
+
+        if (Objects.nonNull(fromAccount) && Objects.nonNull(toAccount) && fromAccount.getBalance() >= amount) {
+            try {
+                operations.multi();
+                fromAccount.setBalance(fromAccount.getBalance() - amount);
+                toAccount.setBalance(toAccount.getBalance() + amount);
+                hashOperations.put(ACCOUNT, fromAccountId, fromAccount);
+                hashOperations.put(ACCOUNT, toAccountId, toAccount);
+                return operations.exec();
+            } catch (Exception e) {
+                operations.discard();
+            }
+        }
+        return Collections.emptyList();
+    }
+}
+```
+
+- RedisTransactionApp.java
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.redis.core.RedisTemplate;
+
+@SpringBootApplication
+public class RedisTransactionApplication implements CommandLineRunner {
+
+	public static void main(String[] args) {
+		SpringApplication.run(RedisTransactionApplication.class, args);
+	}
+
+	@Autowired
+	private RedisTemplate<Object, Object> redisTemplate;
+
+	@Override
+	public void run(String... args) throws Exception {
+		// initialize some accounts
+		Account account1 = Account.of(1, 100);
+		Account account2 = Account.of(2, 20);
+
+		this.redisTemplate.opsForHash().put(MoneyTransfer.ACCOUNT, account1.getUserId(), account1);
+		this.redisTemplate.opsForHash().put(MoneyTransfer.ACCOUNT, account2.getUserId(), account2);
+
+		// do the transaction
+		this.redisTemplate.execute(MoneyTransfer.of(account1.getUserId(),account2.getUserId(), 30));
+
+		// print the result
+		System.out.println(this.redisTemplate.opsForHash().get(MoneyTransfer.ACCOUNT, account1.getUserId()));
+		System.out.println(this.redisTemplate.opsForHash().get(MoneyTransfer.ACCOUNT, account2.getUserId()));
+	}
+}
+```
+
 
 # Output:
 ```
