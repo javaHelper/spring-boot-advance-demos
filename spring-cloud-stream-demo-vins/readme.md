@@ -25,6 +25,9 @@ Control Center is [UP]
 ```
 
 
+<img width="929" alt="Screenshot 2022-12-12 at 2 23 58 PM" src="https://user-images.githubusercontent.com/54174687/207002549-6c477a55-97ba-405a-82dc-aab3d6b4948e.png">
+
+
 - Processor logs
 
 <img width="939" alt="Screenshot 2022-12-12 at 2 20 02 PM" src="https://user-images.githubusercontent.com/54174687/207002035-bd4322a1-e7d3-47d6-8e73-1c1268b19957.png">
