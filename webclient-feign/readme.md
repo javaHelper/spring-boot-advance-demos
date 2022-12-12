@@ -1,5 +1,7 @@
 # WebClient Feign
 
+URL: https://www.vinsguru.com/spring-webclient-with-feign/
+
 - GET all the movies: `http://localhost:3000/movies`
   
 - GET a specific movie with id. `http://localhost:3000/movies/1`
