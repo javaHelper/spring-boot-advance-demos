@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    function:
+      definition: evenNumberSquareProcessor
+    stream:
+      bindings:
+        evenNumberSquareProcessor-in-0:
+          destination: numbers
+        evenNumberSquareProcessor-out-0:
+          destination: squaredNumbers
+      kafka:
+        binder:
+          brokers:
+          - localhost:9092
+        

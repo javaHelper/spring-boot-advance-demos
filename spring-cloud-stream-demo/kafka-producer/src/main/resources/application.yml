@@ -1,0 +1,22 @@
+spring:
+  cloud:
+    function:
+      definition: numberProducer
+    stream:
+      bindings:
+        numberProducer-out-0: 
+          destination: numbers
+          producer:
+            use-native-encoding: true
+            
+      kafka:
+        binder:
+          configuration:
+            value:
+              serializer: org.apache.kafka.common.serialization.LongSerializer
+              
+          brokers:
+          - localhost:9092
+          
+          
+        
