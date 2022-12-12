@@ -9,10 +9,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-
 @Service
 public class PublisherService {
-	private static final String JOKE_API_ENDPOINT = "https://official-joke-api.appspot.com/jokes/random";
+
+    private static final String JOKE_API_ENDPOINT = "https://official-joke-api.appspot.com/jokes/random";
     private WebClient webClient;
 
     @Autowired
@@ -23,14 +23,16 @@ public class PublisherService {
 
     @PostConstruct
     private void init(){
-        this.webClient = WebClient.builder()
+        this.webClient = WebClient
+        		.builder()
                 .baseUrl(JOKE_API_ENDPOINT)
                 .build();
     }
 
     @Scheduled(fixedRate = 3000)
-    public void publish(){
-        this.webClient.get()
+    public void publish() {
+        this.webClient
+        		.get()
                 .retrieve()
                 .bodyToMono(Joke.class)
                 .flatMap(joke -> this.redisTemplate.convertAndSend(topic, joke))
