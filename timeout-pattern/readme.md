@@ -49,3 +49,25 @@ Response:
 ```
 
 <img width="1264" alt="Screenshot 2022-12-13 at 6 04 42 PM" src="https://user-images.githubusercontent.com/54174687/207320120-6728f139-116f-4a97-af3f-f596500477b9.png">
+
+application.yml from calling service which is product-service
+
+```yml
+resilience4j:
+  timelimiter:
+    instances:
+      ratingService: 
+        timeout-duration: 2s
+        cancel-running-future: true
+        
+      someOtherService:
+        timeout-duration: 1s
+        cancel-running-future: false
+      
+---
+rating:
+  service:
+    endpoint: http://localhost:7070/ratings/
+```
+
+
