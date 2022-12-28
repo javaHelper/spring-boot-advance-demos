@@ -6,10 +6,6 @@ import lombok.Data;
 
 @Data
 public class Joke implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private static final String JOKE_FORMAT = "Q: %s \nA: %s";

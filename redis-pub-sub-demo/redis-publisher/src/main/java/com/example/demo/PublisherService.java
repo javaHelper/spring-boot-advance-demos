@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.ReactiveRedisOperations;
@@ -12,7 +10,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 public class PublisherService {
 
-    private static final String JOKE_API_ENDPOINT = "https://official-joke-api.appspot.com/jokes/random";
+    @Autowired
     private WebClient webClient;
 
     @Autowired
@@ -21,13 +19,6 @@ public class PublisherService {
     @Value("${topic.name:joke-channel}")
     private String topic;
 
-    @PostConstruct
-    private void init(){
-        this.webClient = WebClient
-        		.builder()
-                .baseUrl(JOKE_API_ENDPOINT)
-                .build();
-    }
 
     @Scheduled(fixedRate = 3000)
     public void publish() {
