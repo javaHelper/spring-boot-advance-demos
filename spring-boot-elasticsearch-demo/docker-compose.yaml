@@ -1,0 +1,34 @@
+# This works on mac M1 chip
+version: "3.7"
+networks:
+  dev-net:
+    name: dev-net
+    driver: bridge
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0           # this works perfectly fine
+    # platform: linux/amd64
+    # image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0-amd64
+    container_name: elasticsearch
+    restart: unless-stopped
+    networks:
+      - dev-net
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      # - bootstrap.system_call_filter=false # use to avoid the symptom eception. use it only on the amd64 version
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.15.0           # this works perfectly fine
+
+    # platform: linux/amd64
+    # image: docker.elastic.co/kibana/kibana:7.15.0-amd64
+    container_name: kibana
+    restart: unless-stopped
+    networks:
+      - dev-net
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
