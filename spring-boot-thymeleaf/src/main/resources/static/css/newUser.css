@@ -1,0 +1,43 @@
+body {
+    font-family: Verdana,sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.newUserBox {
+    border: 0;
+    margin: 0;
+    padding: 25px;
+    background : #f1f1f1;
+    width: 700px;
+}
+
+.fieldTitle {
+    font-weight: bold;
+}
+
+.fieldSection {
+    margin-bottom: 20px;
+}
+
+input,select {
+     margin-right: 10px;
+     padding: 1px;
+     border: 1px solid #cccccc;
+}
+
+input:required, select:required {
+    border: 1px solid #cc0000;
+}
+
+.button {
+    background: #666666;
+    padding: 6px;
+    border: 2px solid #000000;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.logo {
+    float:right;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" href="main.css" th:href="@{css/main.css}"/>
+</head>
+<body th:with="fullname=${model.title} + ' ' + ${model.firstName} + ' ' + ${#strings.toUpperCase(model.surname)}">
+
+	<div th:replace="fragments/menu :: main-menu" >main menu goes here</div>
+
+	<h1>User Profile</h1>
+	<table>
+		<tr>
+			<td class="title">Full name</td>
+			<td th:text="|You are ${fullname}, and you are most welcome!|">Miss Jane Green</td>
+		</tr>
+		<tr>
+			<td class="title">Date of Birth</td>
+			<td th:text="${#dates.format(model.dateOfBirth,'dd-MMM-yyyy')}">17-JAN-1946</td>
+		</tr>
+		<tr>
+			<td class="title">Description</td>
+			<td th:utext="${model.description}">Description goes here</td>
+		</tr>
+	</table> 
+	
+	<img src="asterisk-guy.jpg" th:src="@{images/asterisk-guy.jpg}"  />
+	<p th:text="${fullname}" style="color:#0f0" th:style="'color:' + ${model.color}" >Your name</p>
+	
+	<h2>Languages spoken</h2>
+	<p>You speak <span th:text="${model.languages.size() >=3} ? '3 or more' : ${model.languages.size()}" >x</span> languages</p>
+	<ul th:if="${model.languages.size() >=3}"  >
+ 		<li th:each="language : ${model.languages}" th:text="${language}">language1</li>
+	</ul>
+	 
+	<p th:if="${model.languages.size() &lt; 3} OR ${isAdmin}" >You speak <span th:each="language: ${model.languages}" th:text="${language} +' '">language1</span> </p>
+	 
+	<p><a th:href="@{/}" href="homepage.html">Click here</a> to return to the homepage.</p>
+	
+	<div th:replace="fragments/menu :: footer-menu">Footer menu goes here </div>
+</body>
+</html>

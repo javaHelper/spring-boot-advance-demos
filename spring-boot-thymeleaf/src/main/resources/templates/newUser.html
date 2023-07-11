@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="newUser.css" th:href="@{css/newUser.css}"/>
+	</head>
+	<body>
+		<h1>Add a new user</h1>
+		
+		<form action="/saveUser" method="POST" th:object="${addUserModel}" >
+			<div class="newUserBox">
+		
+				<div class="fieldSection">
+					<div class="fieldTitle">Login name &amp; Password</div>
+		
+					<input type="text" name="username" id="username" placeholder="username" required="required" th:field="*{username}" />
+					<input type="password" name="pass1" id="pass1" placeholder="password" required="required" th:field="*{password}" />
+					<input type="password" name="pass2" id="pass2" placeholder="repeat password" required="required" th:field="*{repeatPassword}"/>
+					<div th:errors="*{repeatPassword}">Error message</div>
+				</div>
+		
+				<div class="fieldSection">
+					<div class="fieldTitle">Name</div>
+		
+					<select id="title" name="title" required="required" th:field="*{title}">
+						<option value="title" selected="selected" disabled="disabled">Title</option>
+						<option value="Mr">Mr</option>
+						<option value="Miss">Miss</option>
+						<option value="Mrs">Mrs</option>
+						<option value="Ms">Ms</option>
+						<option value="Dr">Dr</option>
+					</select>
+		
+					<input type="text" name="firstname" id="firstname" placeholder="First name" required="required" th:field="*{firstName}"/>
+					<input type="text" name="secondname" id="secondname" placeholder="Second name" required="required" th:field="*{secondName}" />
+		
+				</div>
+				
+				<img class="logo" src="asterisk-guy.jpg" th:src="@{images/asterisk-guy.jpg}"/>
+
+				<div class="fieldSection">
+					<div class="fieldTitle">Address</div>
+		
+					<input type="text" name="address1" id="address1" placeholder="Address line 1" required="required" th:field="*{address1}" />
+					<br />
+					<input type="text" name="address2" id="address2" placeholder="Address line 2" th:field="*{address2}" />
+					<br />
+					<input type="text" name="address3" id="address3" placeholder="Address line 3" th:field="*{address3}"/>
+					<br />
+					<input type="text" name="address4" id="address4" placeholder="Address line 4" th:field="*{address4}"/>
+					<br />
+					<input type="text" name="zip" id="zip" placeholder="Zip or Postal Code" required="required" th:field="*{zip}" />
+					<br />	
+					
+					<select id="country" name="country" required="required" th:field="*{country}">
+						<option value="country" selected="selected" disabled="disabled">Country</option>
+						<option th:each="country : ${addUserModel.countries}" th:text="${country.value}" th:value="${country.key}" value="XXX">Country Name</option>
+					</select>							
+				</div>
+		
+				<input type="submit" value="Save new user" class="button" />
+			</div>
+		</form>
+	</body>
+</html>
