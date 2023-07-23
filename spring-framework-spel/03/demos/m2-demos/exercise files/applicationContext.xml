@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="user" class="com.example.speldemoxml.data.User">
+	    <!--Write literal String expression to wire name property-->
+        <property name="name" value=""/>
+		<!--Write literal Integer expression to wire age property-->
+        <property name="age" value=""/>
+		<!--Write expression accessing systemProperties to wire country property-->
+        <property name="country" value=""/>
+    </bean>
+
+    <bean id="order" class="com.example.speldemoxml.data.Order">
+		<!--Write expression using Mathematical operators to wire amount property-->
+        <property name="amount" value=""/>
+    </bean>
+
+    <bean id="city" class="com.example.speldemoxml.data.City">
+    </bean>
+    <bean id="shipping" class="com.example.speldemoxml.data.Shipping">
+    </bean>
+
+    <bean id="order2" class="com.example.speldemoxml.data.Order">
+	    <!--Write expression using Mathematical and Relational operators to wire discount property-->
+        <property name="discount" value=""/>
+		<!--Write expression using Logical operator to wire daysToDeliver property-->
+        <property name="daysToDeliver" value="" />
+		<!--Write expression using method call to wire formattedAmount property-->
+        <property name="formattedAmount" value=""/>
+        <!--Write expression by accessing collection - Map to wire shippingLocations property-->
+		<property name="shippingLocations" value=""/>
+		<!--Write expression using map selection to wire westernShippingLocations property-->
+        <property name="westernShippingLocations" value=""/>
+    </bean>
+
+    <bean id="order3" class="com.example.speldemoxml.data.Order">
+		<!--Write expression using list selection to wire nonCapitalShippingLocations property-->
+        <property name="nonCapitalShippingLocations" value=""/>
+		<!--Write expression by accessing a list and using List selection to wire noOfCheapShippingLocations property-->
+        <property name="noOfCheapShippingLocations" value=""/>
+		<!--Write expression with expression template to wire orderSummary property-->
+        <property name="orderSummary" value=""/>
+    </bean>
+
+</beans>

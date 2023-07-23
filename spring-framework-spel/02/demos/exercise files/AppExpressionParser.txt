@@ -1,0 +1,29 @@
+public class AppExpressionParser {
+    public static void main(String[] args) {
+	
+	    //Literal String expression
+
+
+        //Expression for method call
+
+        
+		//Expression for Mathematical operation
+
+
+        //Expression for Relational operator
+
+
+        
+		//Expression for Logical operator
+
+
+		//Expression for accessing a defined variable
+
+
+        //Expression using Evaluation Context
+
+
+		//Expression for accessing the systemProperties variable and populating User bean properties
+
+    }
+}

@@ -1,0 +1,112 @@
+@Component("order")
+public class Order {
+    //Annotation using Mathematical operators in expression
+    private double amount;
+	
+    //Annotation using Relational and Mathematical in expression
+    private double discount;
+	
+	//Annotation using Logical operator in expression
+    private int daysToDeliver;
+	
+    //Annotation using bean property wiring
+    private String origin;
+	
+    //Annotation using method call in expression
+    private String formattedAmount;
+	
+    //Annotation using accessing a collection - Map
+    private List<City> shippingLocations;
+	
+	//Annotation using collection selection - List
+    private List<City> nonCapitalShippingLocations;
+	
+    //Annotation using collection selection - Map
+    private Map<String,List<City>> westernShippingLocations;
+	
+    //Annotation using collection selection - List and accessing a list
+    private Integer noOfCheapShippingLocations;
+	
+    //Expression template
+    private String orderSummary;
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public int getDaysToDeliver() {
+        return daysToDeliver;
+    }
+
+    public void setDaysToDeliver(int daysToDeliver) {
+        this.daysToDeliver = daysToDeliver;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getFormattedAmount() {
+        return formattedAmount;
+    }
+
+    public void setFormattedAmount(String formattedAmount) {
+        this.formattedAmount = formattedAmount;
+    }
+
+    public List<City> getShippingLocations() {
+        return shippingLocations;
+    }
+
+    public void setShippingLocations(List<City> shippingLocations) {
+        this.shippingLocations = shippingLocations;
+    }
+
+    public List<City> getNonCapitalShippingLocations() {
+        return nonCapitalShippingLocations;
+    }
+
+    public void setNonCapitalShippingLocations(List<City> nonCapitalShippingLocations) {
+        this.nonCapitalShippingLocations = nonCapitalShippingLocations;
+    }
+
+    public Map<String, List<City>> getWesternShippingLocations() {
+        return westernShippingLocations;
+    }
+
+    public void setWesternShippingLocations(Map<String, List<City>> westernShippingLocations) {
+        this.westernShippingLocations = westernShippingLocations;
+    }
+
+    public Integer getNoOfCheapShippingLocations() {
+        return noOfCheapShippingLocations;
+    }
+
+    public void setNoOfCheapShippingLocations(Integer noOfCheapShippingLocations) {
+        this.noOfCheapShippingLocations = noOfCheapShippingLocations;
+    }
+
+    public String getOrderSummary() {
+        return orderSummary;
+    }
+
+    public void setOrderSummary(String orderSummary) {
+        this.orderSummary = orderSummary;
+    }
+}

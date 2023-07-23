@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="user" class="com.example.speldemoxml.data.User">
+        <property name="name" value="#{'John Doe'}"/>
+        <property name="age" value="#{30}"/>
+        <property name="country" value="#{systemProperties['user.country']}"/>
+    </bean>
+
+    <bean id="order" class="com.example.speldemoxml.data.Order">
+        <property name="amount" value="#{100.55 + 500.75 + 400.66}"/>
+    </bean>
+
+    <bean id="city" class="com.example.speldemoxml.data.City">
+    </bean>
+    <bean id="shipping" class="com.example.speldemoxml.data.Shipping">
+    </bean>
+
+    <bean id="order2" class="com.example.speldemoxml.data.Order">
+        <property name="discount" value="#{order.amount >= 1000 ? order.amount * 5 / 100 : 0 }"/>
+        <property name="daysToDeliver" value="#{user.country == 'US' and user.timeZone == 'America/New_York' ? 3 : 14}" />
+        <property name="formattedAmount" value="#{T(java.text.NumberFormat).getCurrencyInstance(T(java.util.Locale).getDefault()).format(order.amount)}"/>
+        <property name="shippingLocations" value="#{shipping.locationsByCountry[user.country]}"/>
+        <property name="westernShippingLocations" value="#{(shipping.locationsByCountry.?[key == 'UK' or key == 'US' or key == 'DK'])}"/>
+    </bean>
+
+    <bean id="order3" class="com.example.speldemoxml.data.Order">
+        <property name="nonCapitalShippingLocations" value="#{order2.shippingLocations.?[isCapital != true]}"/>
+        <property name="noOfCheapShippingLocations" value="#{order2.shippingLocations.?[shipping &lt; 10].size()}"/>
+        <property name="orderSummary" value="#{user.name} your order total is #{order2.formattedAmount} and the payable amount with 5% discount is #{order.amount - order2.discount}"/>
+    </bean>
+
+</beans>
