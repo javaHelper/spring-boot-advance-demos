@@ -1,5 +1,7 @@
 # Practical Bootcamp JWT Authentication with Java and Spring Boot
 
+https://learning.oreilly.com/videos/practical-bootcamp-jwt/9781803234021/
+
 # Register the User
 
 ```
