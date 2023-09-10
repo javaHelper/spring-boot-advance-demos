@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Student Management System</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+		  integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+		  crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand" href="#">Student Management System</a>
+	  
+		<!-- Toggler/collapsibe Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+	  
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+		  <ul class="navbar-nav">
+			<li class="nav-item">
+			  <a class="nav-link" th:href="@{/students}">Student Management</a>
+			</li>
+		  </ul>
+		</div>
+	  </nav>
+<div class="container">
+	<div class="row justify-content-md-center">
+		<div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+			<h1 class="text-center">Update Student</h1>
+			<div class="card-body">
+				<form th:action="@{/students/{id} (id=${student.id})}" th:object="${student}" method="post">
+					<div class ="form-group">
+						<label>First Name</label>
+						<input type="text" name="firstName" th:field="*{firstName}" class="form-control" placeholder="Enter Student First Name">
+					</div>
+
+					<div class ="form-group">
+						<label>Last Name</label>
+						<input type="text" name="lastName" th:field="*{lastName}" class="form-control" placeholder="Enter Student Last Name">
+					</div>
+
+					<div class ="form-group">
+						<label>Email</label>
+						<input type="text" name="email" th:field="*{email}" class="form-control" placeholder="Enter Student Email">
+					</div>
+
+					<div class="form-group">
+						<label for="gender">Choose Gender</label>
+						<select class="form-control selectpicker" th:field="*{gender}" id="gender">
+							<option value="">Nothing selected</option>
+							<option th:each="gender : ${T(com.example.entity.Gender).values()}"
+									th:value="${gender}"
+									th:text="${gender}">gender
+							</option>
+
+						</select>
+					</div>
+
+					<div class="box-footer">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
