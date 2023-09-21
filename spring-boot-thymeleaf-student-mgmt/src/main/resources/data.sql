@@ -1,0 +1,1 @@
+INSERT INTO `sms`.`students` (`id`, `email`, `first_name`, `last_name`) VALUES ('1', 'mike.doe@gmail.com', 'Mike', 'Doe');
