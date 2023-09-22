@@ -37,7 +37,7 @@ public class ProductService {
         JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, parameters, beanCollectionDataSource);
 
         byte data[] = JasperExportManager.exportReportToPdf(jasperPrint);
-        System.err.println(data);
+        System.out.println(new String(data));
         return data;
     }
 }
