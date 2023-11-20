@@ -1,0 +1,10 @@
+INSERT INTO `book`.`book` (`id`, `author`, `name`, `price`) VALUES ('1', 'Shubhra Gupta', 'Irrfan Khan: A Life in Movies', '100');
+INSERT INTO `book`.`book` (`id`, `author`, `name`, `price`) VALUES ('2', 'Kaki Madhava Rao', 'Breaking Barriers: the Story of a Dalit Chief Secretary', '99');
+INSERT INTO `book`.`book` (`id`, `author`, `name`, `price`) VALUES ('3', 'Shashi Tharoor', 'Ambedkar: A Life', '110');
+INSERT INTO `book`.`book` (`id`, `author`, `name`, `price`) VALUES ('4', 'Dr. Ashvini Kumar Dwivedi', 'Human Anatomy', '111');
+INSERT INTO `book`.`book` (`id`, `author`, `name`, `price`) VALUES ('5', 'Sanjeev Sanyal', 'Revolutionaries: The Other Story of How India Won Its Freedom', '112');
+INSERT INTO `book`.`book` (`id`, `author`, `name`, `price`) VALUES ('6', 'Perumal Murugan', 'Pyre', '113');
+INSERT INTO `book`.`book` (`id`, `author`, `name`, `price`) VALUES ('7', 'Dr MA Hasan', 'War and Women', '101');
+INSERT INTO `book`.`book` (`id`, `author`, `name`, `price`) VALUES ('8', 'Amitabh Kant', 'Made In India', '102');
+INSERT INTO `book`.`book` (`id`, `author`, `name`, `price`) VALUES ('9', 'Boria Majumdar', 'Sachin @ 50', '103');
+INSERT INTO `book`.`book` (`id`, `author`, `name`, `price`) VALUES ('10', 'Ajai Chowdhry', 'Just Aspire', '104');
