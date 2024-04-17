@@ -32,5 +32,8 @@ public class EmployeeProducer {
         KafkaProducer<String, Employee> kafkaProducer = new KafkaProducer<>(properties);
         kafkaProducer.send(new ProducerRecord<>(AppConfig.TOPIC_NAME, ""+employee.getEmpId(), employee));
         System.out.println(">> Producer send the message : "+ employee);
+
+       // ProducerFactory<String, Object> producerFactory = new DefaultKafkaProducerFactory<>(configs);
+       // this.kafkaTemplate = new KafkaTemplate<>(producerFactory);
     }
 }
