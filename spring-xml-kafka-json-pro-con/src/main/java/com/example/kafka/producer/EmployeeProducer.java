@@ -11,6 +11,8 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 
+// https://stackoverflow.com/questions/57120255/creating-kafkalistener-without-annotation-without-spring-boot/57123978#comment138112396_57123978
+
 public class EmployeeProducer {
     Properties properties;
 
