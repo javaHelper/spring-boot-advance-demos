@@ -10,7 +10,7 @@
 
     <bean id="myListener" class="com.example.kafka.listener.MyMessageListener" />
 
-    <bean id="employeeConsumer" class="com.example.kafka.consumer.EmployeeKafkaConsumer" >
+    <bean id="employeeConsumer" class="com.example.kafka.consumer.EmployeeKafkaConsumer2" >
         <constructor-arg name="topic" value="t-employee" />
     </bean>
 </beans>

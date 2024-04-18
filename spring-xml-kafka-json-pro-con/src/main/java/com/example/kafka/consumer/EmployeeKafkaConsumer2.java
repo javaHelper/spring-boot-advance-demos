@@ -9,16 +9,18 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.listener.ContainerProperties;
+import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  *  Consumer Config class
+ *  https://docs.spring.io/spring-kafka/docs/2.2.4.RELEASE/reference/#error-handling-deserializer
  */
-public class EmployeeKafkaConsumer {
+public class EmployeeKafkaConsumer2 {
 
-    public EmployeeKafkaConsumer(String topic) {
+    public EmployeeKafkaConsumer2(String topic) {
         initializeConsumer(topic);
     }
 
@@ -27,25 +29,32 @@ public class EmployeeKafkaConsumer {
         propsMap.put(ConsumerConfig.CLIENT_ID_CONFIG, AppConfig.CLIENT_ID);
         propsMap.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConfig.BOOTSTRAP_SERVER);
         propsMap.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        propsMap.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, AppJsonDeserializer.class);
+        // This will not handle junk data
+        //propsMap.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, AppJsonDeserializer.class);
+
+        propsMap.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
+        propsMap.put("spring.kafka.consumer.properties.spring.deserializer.value.delegate.class", org.springframework.kafka.support.serializer.JsonDeserializer.class);
+
         propsMap.put(ConsumerConfig.GROUP_ID_CONFIG, "group1");
         propsMap.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
         propsMap.put(AppJsonDeserializer.VALUE_CLASS_NAME_CONFIG, Employee.class);
+        propsMap.put(org.springframework.kafka.support.serializer.JsonDeserializer.TRUSTED_PACKAGES, "*");
+        propsMap.put(org.springframework.kafka.support.serializer.JsonDeserializer.VALUE_DEFAULT_TYPE, "com.example.kafka.model.Employee");
 
-
-        DefaultKafkaConsumerFactory<String, String> kafkaConsumerFactory = new DefaultKafkaConsumerFactory<>(
+        DefaultKafkaConsumerFactory<String, Employee> kafkaConsumerFactory = new DefaultKafkaConsumerFactory<>(
                 propsMap,
                 new StringDeserializer(),
-                new StringDeserializer()
+                new AppJsonDeserializer<Employee>()
         );
 
         ContainerProperties containerProperties = new ContainerProperties(topic);
         containerProperties.setMessageListener(new MyMessageListener());
 
-        ConcurrentMessageListenerContainer<String, String> container = new ConcurrentMessageListenerContainer<>(
+        ConcurrentMessageListenerContainer<String, Employee> container = new ConcurrentMessageListenerContainer<>(
             kafkaConsumerFactory,
             containerProperties
         );
+
         container.start();
      }
 }
