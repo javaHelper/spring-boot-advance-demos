@@ -28,33 +28,22 @@ public class EmployeeKafkaConsumer2 {
         Map<String, Object> propsMap = new HashMap<>();
         propsMap.put(ConsumerConfig.CLIENT_ID_CONFIG, AppConfig.CLIENT_ID);
         propsMap.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConfig.BOOTSTRAP_SERVER);
-        propsMap.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        // This will not handle junk data
-        //propsMap.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, AppJsonDeserializer.class);
-
-        propsMap.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
-        propsMap.put("spring.kafka.consumer.properties.spring.deserializer.value.delegate.class", org.springframework.kafka.support.serializer.JsonDeserializer.class);
 
         propsMap.put(ConsumerConfig.GROUP_ID_CONFIG, "group1");
         propsMap.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
         propsMap.put(AppJsonDeserializer.VALUE_CLASS_NAME_CONFIG, Employee.class);
-        propsMap.put(org.springframework.kafka.support.serializer.JsonDeserializer.TRUSTED_PACKAGES, "*");
-        propsMap.put(org.springframework.kafka.support.serializer.JsonDeserializer.VALUE_DEFAULT_TYPE, "com.example.kafka.model.Employee");
 
         DefaultKafkaConsumerFactory<String, Employee> kafkaConsumerFactory = new DefaultKafkaConsumerFactory<>(
                 propsMap,
                 new StringDeserializer(),
-                new AppJsonDeserializer<Employee>()
+                new ErrorHandlingDeserializer<>(new AppJsonDeserializer<>())
         );
 
         ContainerProperties containerProperties = new ContainerProperties(topic);
         containerProperties.setMessageListener(new MyMessageListener());
 
-        ConcurrentMessageListenerContainer<String, Employee> container = new ConcurrentMessageListenerContainer<>(
-            kafkaConsumerFactory,
-            containerProperties
-        );
-
+        ConcurrentMessageListenerContainer<String, Employee> container =
+                new ConcurrentMessageListenerContainer<>(kafkaConsumerFactory, containerProperties);
         container.start();
-     }
+    }
 }
