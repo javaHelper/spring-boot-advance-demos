@@ -16,3 +16,5 @@
 20:35:01.012 [noBeanNameSet-0-C-1] INFO  c.e.kafka.listener.MyMessageListener - Message # {"empId":67,"firstName":"Ellena","lastName":"Larson","gender":"M"}
 20:35:01.012 [noBeanNameSet-0-C-1] INFO  c.e.kafka.listener.MyMessageListener - ####################
 ```
+
+# This code doesn't works when producer sends junk data, code goes into endless loop.
