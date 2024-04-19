@@ -1,4 +1,4 @@
-#
+# Exception Handling in Kafka
 
 Start the App, it will automatically publish the message into e-employee topic and consumer will read thge message
 
