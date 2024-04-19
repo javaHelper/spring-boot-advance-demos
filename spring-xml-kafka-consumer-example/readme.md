@@ -1,4 +1,6 @@
-# 
+# NOT RECOMMANDE APPROACH
+
+https://stackoverflow.com/questions/78348160/how-to-handle-the-exception-at-consumer-ion-spring
 
 - This example is developed purely using Spring XML
 
