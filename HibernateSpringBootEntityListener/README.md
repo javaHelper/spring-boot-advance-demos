@@ -1,3 +1,11 @@
+# Useful Links
+
+- https://stackoverflow.com/questions/78424413/how-to-use-jparepository-method-in-the-jpa-entity-lifecycle-callbacks/78440553#78440553
+- https://stackoverflow.com/questions/12155632/injecting-a-spring-dependency-into-a-jpa-entitylistener
+- https://github.com/eclipseAce/inject-into-entity-listener/blob/master/src/main/java/com/example/demo/InjectIntoEntityListenerApplication.java
+
+
+
 **[Defining Entity Listener Class Via `@EntityListeners`](https://github.com/AnghelLeonard/Hibernate-SpringBoot/tree/master/HibernateSpringBootEntityListener)**
 
 **Description:** This application is a sample of using the JPA `@MappedSuperclass` and `@EntityListeners` with JPA callbacks.
