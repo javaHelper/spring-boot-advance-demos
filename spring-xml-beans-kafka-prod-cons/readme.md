@@ -87,3 +87,56 @@ Now Again, publish the good record from console
 Employee : Employee(empId=44, firstName=Boyce, lastName=Leuschke, gender=M)
 23:24:25.701 [containerListener-C-1] INFO  c.e.kafka.listener.MyMessageListener - ####################
 ```
+
+#
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <bean id="employeeProducer" class="com.example.kafka.producer.EmployeeProducer" />
+
+    <bean id="cf" class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
+        <constructor-arg>
+            <map>
+                <entry key="bootstrap.servers" value="localhost:9092,localhost:9093,localhost:9094"/>
+                <entry key="spring.json.trusted.packages" value="*" />
+                <entry key="auto.offset.reset" value="latest"/>
+                <entry key="group.id" value="group1" />
+                <entry key="client.id" value="my-client-id" />
+                <entry key="max.poll.records" value="1"/>
+                <entry key="key.deserializer" value="org.springframework.kafka.support.serializer.ErrorHandlingDeserializer" />
+                <entry key="value.deserializer" value="org.springframework.kafka.support.serializer.ErrorHandlingDeserializer" />
+
+                <entry key="spring.deserializer.key.delegate.class" value="org.apache.kafka.common.serialization.StringDeserializer" />
+                <entry key="spring.deserializer.value.delegate.class" value="org.springframework.kafka.support.serializer.JsonDeserializer" />
+                <entry key="value.class.name" value="com.example.kafka.model.Employee" />
+                <entry key="spring.json.value.default.type" value="com.example.kafka.model.Employee" />
+                <entry key="spring.kafka.producer.properties.spring.json.add.type.headers" value="false" />
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="cp" class="org.springframework.kafka.listener.ContainerProperties">
+        <constructor-arg name="topics" value="t-employee"/>
+        <property name="groupId" value="group1"/>
+        <property name="messageListener" ref="myListener"  />
+        <property name="ackMode" value="BATCH" />
+    </bean>
+
+    <bean id="containerListener" class="org.springframework.kafka.listener.KafkaMessageListenerContainer">
+        <constructor-arg index="0" ref="cf"/>
+        <constructor-arg index="1" ref="cp" />
+    </bean>
+
+    <bean id="myListener" class="com.example.kafka.listener.MyMessageListener" />
+</beans>
+```
