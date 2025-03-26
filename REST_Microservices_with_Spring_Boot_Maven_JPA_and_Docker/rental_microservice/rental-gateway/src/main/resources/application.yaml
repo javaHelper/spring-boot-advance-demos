@@ -1,0 +1,5 @@
+server:
+  port: 8080
+
+user.url: "http://localhost:8082/"
+vehicle.url: "http://localhost:8080/"
