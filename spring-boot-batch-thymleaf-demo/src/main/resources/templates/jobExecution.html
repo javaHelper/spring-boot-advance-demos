@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Executions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Job Executions for <span th:text="${jobName}"></span> (Instance: <span th:text="${instanceId}"></span>)</h1>
+    <a th:href="@{/jobs/{jobName}(jobName=${jobName})}" class="btn btn-secondary mb-3">Back to Instances</a>
+	<table class="table table-bordered table-striped">
+	    <thead class="table-dark">
+        <tr>
+            <th>Execution ID</th>
+			<th>Instance ID</th>
+            <th>Status</th>
+            <th>Exit Status</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="execution : ${jobExecutions}">
+            <td th:text="${execution.executionId}"></td>
+			<td th:text="${execution.instanceId}"></td>
+            <td th:text="${execution.status}"></td>
+            <td th:text="${execution.exitStatus.exitCode}"></td>
+            <td th:text="${execution.startTime}"></td>
+            <td th:text="${execution.endTime}"></td>
+            <td>
+                <a th:href="@{/execution/{executionId}(executionId=${execution.executionId})}" 
+                   class="btn btn-primary">View Steps</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

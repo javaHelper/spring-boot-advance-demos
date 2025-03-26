@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Step Executions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Step Executions for Job Execution <span th:text="${jobExecution.id}"></span></h1>
+    <a th:href="@{/jobs/{jobName}/{instanceId}(jobName=${jobExecution.jobInstance.jobName}, instanceId=${jobExecution.jobInstance.instanceId})}" 
+       class="btn btn-secondary mb-3">Back to Executions</a>
+    
+    <div class="card mb-3">
+        <div class="card-header">
+            Job Execution Details
+        </div>
+        <div class="card-body">
+            <p><strong>Job Name:</strong> <span th:text="${jobExecution.jobInstance.jobName}"></span></p>
+            <p><strong>Status:</strong> <span th:text="${jobExecution.status}"></span></p>
+            <p><strong>Exit Status:</strong> <span th:text="${jobExecution.exitStatus.exitCode}"></span></p>
+            <p><strong>Start Time:</strong> <span th:text="${jobExecution.startTime}"></span></p>
+            <p><strong>End Time:</strong> <span th:text="${jobExecution.endTime}"></span></p>
+        </div>
+    </div>
+    
+    <h3>Step Executions</h3>
+	<table class="table table-bordered table-striped">
+	    <thead class="table-dark">
+        <tr>
+            <th>Step Name</th>
+            <th>Status</th>
+			<th>Exit Status</th>
+            <th>Read Count</th>
+            <th>Write Count</th>
+            <th>Commit Count</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="step : ${jobExecution.stepExecutions}">
+            <td th:text="${step.stepName}"></td>
+            <td th:text="${step.status}"></td>
+			<td th:text="${step.exitStatus.exitCode}"></td>
+            <td th:text="${step.readCount}"></td>
+            <td th:text="${step.writeCount}"></td>
+            <td th:text="${step.commitCount}"></td>
+            <td th:text="${step.startTime}"></td>
+            <td th:text="${step.endTime}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

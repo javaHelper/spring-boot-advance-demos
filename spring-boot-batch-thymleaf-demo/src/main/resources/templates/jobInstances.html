@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Instances</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Job Instances for <span th:text="${jobName}"></span></h1>
+    <a href="/jobs" class="btn btn-secondary mb-3">Back to Jobs</a>
+	<table class="table table-bordered table-striped">
+	    <thead class="table-dark">
+        <tr>
+            <th>Instance ID</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="instance : ${jobInstances}">
+            <td th:text="${instance.instanceId}"></td>
+            <td>
+                <a th:href="@{/jobs/{jobName}/{instanceId}(jobName=${jobName}, instanceId=${instance.instanceId})}" 
+                   class="btn btn-primary">View Executions</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
