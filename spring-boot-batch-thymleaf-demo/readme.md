@@ -1,5 +1,7 @@
 # Spring Boot Batch Thymeleaf example
 
+Ref: https://docs.spring.io/spring-batch-admin/trunk/screenshots.html
+
 http://localhost:8080/jobs
 
 <img width="802" alt="Screenshot 2025-03-26 at 10 46 08 AM" src="https://github.com/user-attachments/assets/56e0b024-56a4-463e-8014-ddc05f322404" />
