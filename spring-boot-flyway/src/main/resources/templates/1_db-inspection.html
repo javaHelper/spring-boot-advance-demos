@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Database Inspection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .card {
+            margin-bottom: 2rem;
+        }
+        .badge {
+            font-size: 0.9em;
+        }
+        .pagination {
+            margin-top: 1rem;
+        }
+        .page-size-selector {
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-database"></i> Database Schema Inspection</h1>
+        <a href="/" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left"></i> Back to Application
+        </a>
+    </div>
+
+    <!-- Flyway History Card -->
+    <div class="card">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-clock-history"></i> Flyway Migration History</span>
+            <span class="badge bg-light text-dark">
+                    Page <span th:text="${flywayHistory.number + 1}"></span> of <span th:text="${flywayHistory.totalPages}"></span>
+                </span>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Version</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                        <th>Script</th>
+                        <th>Installed On</th>
+                        <th>Execution Time</th>
+                        <th>Success</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="entry : ${flywayHistory}">
+                        <td th:text="${entry[1]}"></td> <!-- version -->
+                        <td th:text="${entry[2]}"></td> <!-- description -->
+                        <td th:text="${entry[3]}"></td> <!-- type -->
+                        <td th:text="${entry[4]}"></td> <!-- script -->
+                        <td th:text="${entry[7]}"></td> <!-- installed On -->
+                        <td th:text="${entry[8]}"></td> <!-- Execution Time -->
+                        <td>
+                            <span th:if="${entry[9] == true}" class="badge bg-success">Success</span>
+                            <span th:if="${entry[9] == false}" class="badge bg-danger">Failed</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div th:if="${flywayHistory.totalPages > 1}">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-muted">
+                        Showing <span th:text="${flywayHistory.number * flywayHistory.size + 1}"></span> to
+                        <span th:text="${(flywayHistory.number * flywayHistory.size) + flywayHistory.numberOfElements}"></span> of
+                        <span th:text="${flywayHistory.totalElements}"></span> entries
+                    </div>
+
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item" th:classappend="${flywayHistory.first} ? 'disabled'">
+                                <a class="page-link" th:href="@{/admin/db/schema(page=0, size=${flywayHistory.size})}">
+                                    <i class="bi bi-chevron-double-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item" th:classappend="${flywayHistory.first} ? 'disabled'">
+                                <a class="page-link" th:href="@{/admin/db/schema(page=${flywayHistory.number - 1}, size=${flywayHistory.size})}">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+
+                            <li th:each="i : ${#numbers.sequence(
+                                    Math.max(0, flywayHistory.number - 2),
+                                    Math.min(flywayHistory.number + 2, flywayHistory.totalPages - 1))}"
+                                class="page-item" th:classappend="${i == flywayHistory.number} ? 'active'">
+                                <a class="page-link"
+                                   th:href="@{/admin/db/schema(page=${i}, size=${flywayHistory.size})}"
+                                   th:text="${i + 1}"></a>
+                            </li>
+
+                            <li class="page-item" th:classappend="${flywayHistory.last} ? 'disabled'">
+                                <a class="page-link" th:href="@{/admin/db/schema(page=${flywayHistory.number + 1}, size=${flywayHistory.size})}">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                            <li class="page-item" th:classappend="${flywayHistory.last} ? 'disabled'">
+                                <a class="page-link" th:href="@{/admin/db/schema(page=${flywayHistory.totalPages - 1}, size=${flywayHistory.size})}">
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div class="page-size-selector">
+                        <select class="form-select form-select-sm" onchange="location = this.value;">
+                            <option th:each="size : ${[5, 10, 20, 50, 100]}"
+                                    th:value="@{/admin/db/schema(page=0, size=${size})}"
+                                    th:selected="${flywayHistory.size == size}"
+                                    th:text="'Show ' + ${size} + ' items'"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Database Tables Card -->
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <i class="bi bi-table"></i> Database Tables
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Table Name</th>
+                        <th>Type</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="table : ${tables}">
+                        <td th:text="${table.name}"></td>
+                        <td th:text="${table.type}"></td>
+                        <td>
+                            <a th:href="@{'/admin/db/table/' + ${table.name}}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-search"></i> Inspect
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Indexes Card -->
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <i class="bi bi-list-columns"></i> Indexes on Person Table
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Index Name</th>
+                        <th>Column</th>
+                        <th>Unique</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="index : ${indexes}">
+                        <td th:text="${index.name}"></td>
+                        <td th:text="${index.column}"></td>
+                        <td>
+                            <span th:if="${index.unique == 'Yes'}" class="badge bg-success">Yes</span>
+                            <span th:if="${index.unique == 'No'}" class="badge bg-secondary">No</span>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(indexes)}">
+                        <td colspan="3" class="text-center text-muted">No indexes found for person table</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Enable tooltips
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+</script>
+</body>
+</html>
