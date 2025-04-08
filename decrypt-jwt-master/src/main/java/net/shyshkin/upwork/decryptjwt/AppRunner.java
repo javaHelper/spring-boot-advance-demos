@@ -118,15 +118,8 @@ public class AppRunner implements CommandLineRunner {
     private EncryptedJWT encryptTestJWT() {
         Date now = new Date();
 
-        JWTClaimsSet jwtClaims = new JWTClaimsSet.Builder()
-                .issuer("https://openid.net")
-                .subject("alice")
-                .audience(Arrays.asList("https://app-one.com", "https://app-two.com"))
-                .expirationTime(new Date(now.getTime() + 1000 * 60 * 10)) // expires in 10 minutes
-                .notBeforeTime(now)
-                .issueTime(now)
-                .jwtID(UUID.randomUUID().toString())
-                .build();
+        JWTClaimsSet jwtClaims = new JWTClaimsSet.Builder().issuer("https://openid.net").subject("alice").audience(Arrays.asList("https://app-one.com", "https://app-two.com")).expirationTime(new Date(now.getTime() + 1000 * 60 * 10)) // expires in 10 minutes
+                .notBeforeTime(now).issueTime(now).jwtID(UUID.randomUUID().toString()).build();
 
         return jwtService.encrypt(jwtClaims, publicKey);
     }
