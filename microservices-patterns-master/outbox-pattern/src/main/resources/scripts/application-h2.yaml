@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: outbox-pattern
+  datasource:
+      hibernate:
+        ddl-auto: create-drop
+        show-sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+      url: jdbc:h2:mem:outbox-db;DB_CLOSE_ON_EXIT=FALSE
+#     url: jdbc:h2:file:/data/demo
+      username: sa
+      password: password
+      driverClassName: org.h2.Driver
+  jpa:
+      database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+      console:
+        enabled: true
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      group-id: outbox-group-id   # specifies the consumer group ID for your application.
+
+configuration:
+  kafka:
+    scheduled: 5000
