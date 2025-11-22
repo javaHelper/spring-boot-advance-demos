@@ -24,25 +24,7 @@ Response:
 ````
 
 # Query
-````shell
-Hibernate: 
-    select
-        product0_.id as id1_0_0_,
-        product0_.description as descript2_0_0_,
-        product0_.name as name3_0_0_,
-        product0_.price as price4_0_0_,
-        product0_.productType as productt5_0_0_ 
-    from
-        Product product0_ 
-    where
-        product0_.id=?
-Hibernate: 
-    update
-        Product 
-    set
-        description=?,
-        name=? 
-    where
-        id=?
-        
-```
+````logs
+Hibernate: select p1_0.id,p1_0.description,p1_0.name,p1_0.price,p1_0.productType from Product p1_0 where p1_0.id=?
+Hibernate: update Product set description=?,name=? where id=?
+````
