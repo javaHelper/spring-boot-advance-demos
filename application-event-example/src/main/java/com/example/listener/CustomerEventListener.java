@@ -10,6 +10,6 @@ public class CustomerEventListener implements ApplicationListener<CustomerEvent>
     @Override
     public void onApplicationEvent(CustomerEvent event) {
         System.out.println("============");
-        System.out.println(event);
+        System.out.println(event.getCustomer());
     }
 }
