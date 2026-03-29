@@ -1,0 +1,28 @@
+@startuml
+actor Client
+participant "Client App\n(Spring Boot)" as C
+participant "TLS Layer" as TLS
+participant "Server App\n(Spring Boot)" as S
+
+Client -> C : Call API
+C -> TLS : Initiate HTTPS request
+
+TLS -> TLS : ClientHello
+TLS -> TLS : ServerHello + Server Certificate
+
+TLS -> TLS : Validate Server Cert (truststore)
+
+TLS -> TLS : Server requests Client Certificate
+
+TLS -> TLS : Client sends Client Certificate
+TLS -> TLS : Client proves private key ownership
+
+TLS -> TLS : Server validates Client Cert (truststore)
+
+TLS -> TLS : Secure channel established
+
+TLS -> S : Forward HTTP request
+S -> TLS : HTTP response
+TLS -> C : Encrypted response
+C -> Client : Return result
+@enduml

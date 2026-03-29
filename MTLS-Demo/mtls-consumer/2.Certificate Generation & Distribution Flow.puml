@@ -1,0 +1,27 @@
+@startuml
+participant "Dev/Ops" as D
+participant "CA" as CA
+participant "Client App" as C
+participant "Server App" as S
+
+D -> CA : Generate Root CA (ca.key, ca.crt)
+
+== Server Certificate ==
+D -> S : Generate server.key
+D -> S : Create CSR (server.csr)
+S -> CA : Send CSR
+CA -> S : Signed cert (server.crt)
+D -> S : Create server.p12
+
+== Client Certificate ==
+D -> C : Generate client.key
+D -> C : Create CSR (client.csr)
+C -> CA : Send CSR
+CA -> C : Signed cert (client.crt)
+D -> C : Create client.p12
+
+== Trust Setup ==
+D -> C : Import ca.crt → truststore.p12
+D -> S : Import ca.crt → truststore.p12
+
+@enduml

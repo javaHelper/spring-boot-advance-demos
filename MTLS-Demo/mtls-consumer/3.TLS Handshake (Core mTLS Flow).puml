@@ -1,0 +1,29 @@
+@startuml
+participant "Client\n(WebClient)" as C
+participant "TLS Layer" as TLS
+participant "Server\n(Spring Boot)" as S
+
+C -> TLS : ClientHello
+TLS -> S : Forward ClientHello
+
+S -> TLS : ServerHello + Server Certificate
+TLS -> C : ServerHello + Server Cert
+
+C -> TLS : Validate Server Cert (truststore)
+
+S -> TLS : Request Client Certificate
+
+TLS -> C : CertificateRequest
+
+C -> TLS : Send Client Certificate
+C -> TLS : Prove Private Key (signature)
+
+TLS -> S : Client Certificate + Proof
+
+S -> TLS : Validate Client Cert (truststore)
+
+TLS -> TLS : Generate session keys
+
+TLS -> S : Secure channel established
+TLS -> C : Secure channel established
+@enduml

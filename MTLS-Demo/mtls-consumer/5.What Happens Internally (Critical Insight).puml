@@ -1,0 +1,20 @@
+@startuml
+participant "Client JVM" as CJVM
+participant "KeyManager" as KM
+participant "TrustManager" as TM
+participant "Server JVM" as SJVM
+
+CJVM -> KM : Load client.p12
+KM -> KM : Access private key
+
+SJVM -> TM : Load truststore
+TM -> TM : Load CA cert
+
+CJVM -> SJVM : Send client certificate
+SJVM -> TM : Validate certificate chain
+
+CJVM -> SJVM : Sign handshake data
+SJVM -> KM : Verify signature
+
+SJVM -> CJVM : Accept connection
+@enduml

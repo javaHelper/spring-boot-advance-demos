@@ -1,0 +1,29 @@
+@startuml
+actor User
+participant "Client App\n(WebClient)" as C
+participant "Client TLS\n(client.p12)" as CTLS
+participant "Server TLS\n(server.p12)" as STLS
+participant "Server App" as S
+
+User -> C : Call API
+
+C -> CTLS : Load client.p12 (private key + cert)
+CTLS -> STLS : TLS Handshake
+
+== Handshake ==
+STLS -> CTLS : Server Certificate
+CTLS -> CTLS : Validate using truststore
+
+STLS -> CTLS : Request Client Certificate
+CTLS -> STLS : Send Client Certificate
+CTLS -> STLS : Sign challenge (private key)
+
+STLS -> STLS : Validate client cert (truststore)
+
+== Secure Channel Established ==
+
+C -> S : GET /hello (encrypted)
+S -> C : Response (encrypted)
+
+C -> User : "mTLS SUCCESS"
+@enduml

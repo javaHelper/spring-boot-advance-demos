@@ -1,0 +1,13 @@
+@startuml
+actor Client
+participant "Client App\n(Spring Boot)" as C
+participant "Server App\n(Spring Boot)" as S
+database "CA (Certificate Authority)" as CA
+
+Client -> C : Trigger API call
+C -> S : HTTPS (mTLS)
+S -> C : Response
+
+CA -> C : Client Certificate
+CA -> S : Server Certificate
+@enduml
