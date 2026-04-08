@@ -1,0 +1,22 @@
+@startuml
+actor Client
+
+participant "Producer (Auth Server)" as Producer
+participant "Private Key (RSA)" as PrivateKey
+participant "Consumer (Resource Server)" as Consumer
+participant "Public Key (RSA)" as PublicKey
+
+Client -> Producer : Request /auth/token
+Producer -> PrivateKey : Sign JWT (RS256)
+Producer --> Client : Return JWT
+
+Client -> Consumer : Call /secure (Authorization: Bearer JWT)
+Consumer -> PublicKey : Verify JWT Signature
+Consumer -> Consumer : Validate claims (exp, iss, sub)
+
+alt Valid Token
+    Consumer --> Client : 200 OK (secured data)
+else Invalid Token
+    Consumer --> Client : 401 Unauthorized
+end
+@enduml

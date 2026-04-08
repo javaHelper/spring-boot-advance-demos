@@ -1,0 +1,39 @@
+@startuml
+actor Client
+
+participant "AuthController" as Controller
+participant "JwtService" as Service
+participant "KeyUtil" as KeyUtil
+participant "RSAPrivateKey" as PrivateKey
+
+participant "SecurityFilterChain" as Filter
+participant "JwtDecoder" as Decoder
+participant "RSAPublicKey" as PublicKey
+
+== TOKEN GENERATION ==
+
+Client -> Controller : GET /auth/token
+Controller -> Service : generateToken(username)
+Service -> KeyUtil : loadPrivateKey()
+KeyUtil --> Service : RSAPrivateKey
+
+Service -> PrivateKey : Sign JWT (RS256)
+Service --> Controller : JWT
+Controller --> Client : JWT
+
+== TOKEN VALIDATION ==
+
+Client -> Filter : Request /secure (Bearer JWT)
+Filter -> Decoder : Decode & validate JWT
+Decoder -> PublicKey : Verify Signature
+
+alt Signature Valid
+    Decoder --> Filter : Valid JWT
+    Filter -> Filter : Extract Claims
+    Filter --> Client : 200 OK
+else Invalid
+    Decoder --> Filter : Error
+    Filter --> Client : 401 Unauthorized
+end
+
+@enduml
