@@ -1,47 +1,46 @@
-# Spring Boot JWT
+# Spring Boot JWT token Demo
 
-- Make a POST request to `/users/signin` with the default admin user we programatically created to get a valid JWT token
+# Create / Register User
 
-```sh
-curl -X POST 'http://localhost:8080/users/signin?username=admin&password=admin'
-```
-Response:
-
-```sh
-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTY1NzY0MzAyNiwiZXhwIjoxNjU3NjQ2NjI2fQ.95rFZ9tsyNLN3ZFCVoN12-xjAv0sUf3OfJZpRscQlro
-```
-
-
-- Add the JWT token as a Header parameter and make the initial GET request to `/users/me` again.
-
-```sh
-curl --location --request GET 'http://localhost:8080/users/me' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTY1NzY0MzAyNiwiZXhwIjoxNjU3NjQ2NjI2fQ.95rFZ9tsyNLN3ZFCVoN12-xjAv0sUf3OfJZpRscQlro'
+```bash
+curl --request POST \
+  --url http://localhost:8080/api/auth/signup \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"username": "testuser",
+	"password": "testpass"
+}'
 ```
 
-Response:
+# Sign In User
 
-```sh
-{
-    "id": 1,
-    "username": "admin",
-    "email": "admin@email.com",
-    "appUserRoles": [
-        "ROLE_ADMIN"
-    ]
-}
+```bash
+curl --request POST \
+  --url http://localhost:8080/api/auth/signin \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"username": "testuser",
+	"password": "testpass"
+}'
 ```
 
-- Refresh Endpoint - 
+# Response
 
-```
-curl --location --request GET 'http://localhost:8080/users/refresh' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTY1NzY0MzAyNiwiZXhwIjoxNjU3NjQ2NjI2fQ.95rFZ9tsyNLN3ZFCVoN12-xjAv0sUf3OfJZpRscQlro'
-```
-
-Response:
-
-```sh
-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTY1NzY0Mzc3NywiZXhwIjoxNjU3NjQ3Mzc3fQ.2BxxT-UKcWWP4BZv08OxEHmi6RD3SAajQYzQNfwvqgc
+```json
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTc3NTY2MjYwNSwiZXhwIjoxNzc1NjY2MjA1fQ.bktdQu4AL9kysK-FKnigCeD_V-TInVeZ-ODLYmJB6f0
 ```
 
+# Access Not Protected Resource
+
+```bash
+curl --request GET \
+  --url http://localhost:8080/api/test/all
+```
+
+# Access Protected Resource
+
+```bash
+curl --request GET \
+  --url http://localhost:8080/api/test/user \
+  --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTc3NTY2MjYwNSwiZXhwIjoxNzc1NjY2MjA1fQ.bktdQu4AL9kysK-FKnigCeD_V-TInVeZ-ODLYmJB6f0'
+```
