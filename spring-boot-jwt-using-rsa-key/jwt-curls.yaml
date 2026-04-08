@@ -1,0 +1,117 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: JwtSample
+meta:
+  id: wrk_fb6a677c74294bcc8d7e43267825c85c
+  created: 1775661510553
+  modified: 1775661510553
+  description: ""
+collection:
+  - name: Jwt
+    meta:
+      id: fld_0aa5a2be34414662a28fd0025f2b72df
+      created: 1775674091488
+      modified: 1775674091488
+      sortKey: -1775674091488
+      description: ""
+    children:
+      - url: http://localhost:8080/auth/register
+        name: 1. Register User
+        meta:
+          id: req_38e96b0dc92147de938b4795e0d4b208
+          created: 1775673947617
+          modified: 1775674099134
+          isPrivate: false
+          description: ""
+          sortKey: -1775674097366
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"username": "john",
+            	"password": "secret"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/auth/login
+        name: 2. Login
+        meta:
+          id: req_607ca80db2a84ba0993ed08989574a2b
+          created: 1775673968690
+          modified: 1775674097300
+          isPrivate: false
+          description: ""
+          sortKey: -1775674097266
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"username": "john",
+            	"password": "secret"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/profile
+        name: 3. Access Protected Respurces
+        meta:
+          id: req_ac264646c87c46c6bbf2010beea9323c
+          created: 1775674009702
+          modified: 1775674101615
+          isPrivate: false
+          description: ""
+          sortKey: -1775674097166
+        method: GET
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_607ca80db2a84ba0993ed08989574a2b',
+            'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_4547e91f4f715ab7682ea0ba1e3507014ff15f2a
+    created: 1775661510617
+    modified: 1775672055448
+  cookies:
+    - id: e906cb02-09de-4888-92a7-1c5cd113120d
+      key: JSESSIONID
+      value: A7626957F7113AD39E98A5F4C427A6DF
+      domain: localhost
+      path: /
+      secure: false
+      httpOnly: true
+      hostOnly: true
+environments:
+  name: Base Environment
+  meta:
+    id: env_4547e91f4f715ab7682ea0ba1e3507014ff15f2a
+    created: 1775661510558
+    modified: 1775661510558
+    isPrivate: false
