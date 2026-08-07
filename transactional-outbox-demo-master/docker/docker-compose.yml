@@ -21,7 +21,7 @@ services:
       ALLOW_ANONYMOUS_LOGIN: "yes"
 
   kafka:
-    image: docker.io/bitnami/kafka:3
+    image: docker.io/soldevelo/kafka:3.9
     container_name: kafka
     restart: unless-stopped
     networks:
